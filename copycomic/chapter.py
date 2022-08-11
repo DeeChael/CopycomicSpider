@@ -46,13 +46,14 @@ class Chapter:
                 pic_links = list()
                 for content in response['results']['chapter']['contents']:
                     pic_links.append(content['url'])
-                index = 1
-                for pic_link in pic_links:
-                    async with session.get(pic_link) as pic_response:
+                orders = response['results']['chapter']['words']
+                with open(path + "/download_info.txt", "w") as download_info:
+                    download_info.write(f"Comic name: {self.comic_name}\nComic Id: {self.comic_id}\nChapter name: {self.name}\nChapter id: {self.id}\nPages: {len(pic_links)}\nOrders: {orders}")
+                for order in orders:
+                    async with session.get(pic_links[order]) as pic_response:
                         if pic_response.status != 200:
                             raise RuntimeError(f"Network problem {{code: {pic_response.status}}}")
                         bytes = await pic_response.read()
                     image = Image.open(BytesIO(bytes), mode='r')
-                    image.save(path + "/" + str(index) + ".png")
-                    logging.debug(f"    Downloaded: {self.comic_name} - {self.name} - Page {index}")
-                    index += 1
+                    image.save(path + "/" + str(order) + ".png")
+                    logging.debug(f"    Downloaded: {self.comic_name} - {self.name} - Page {order}")
