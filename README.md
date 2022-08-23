@@ -1,6 +1,8 @@
 # CopycomicSpider
 A library can fetch comics on Copycomic
 
+### 2022.8.23 Updated, it seems that the api link won't return chapters now, it will return an empty array, I'll find the way to solve it
+
 ## Example
 ```python
 import asyncio

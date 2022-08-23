@@ -6,9 +6,6 @@ from . import utils
 from .chapter import Chapter
 
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
-
 semaphore = asyncio.Semaphore(30)
 
 

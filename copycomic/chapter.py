@@ -8,8 +8,6 @@ from PIL import Image
 
 from . import utils
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
 
 semaphore = asyncio.Semaphore(30)
 

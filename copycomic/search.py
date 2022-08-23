@@ -11,9 +11,6 @@ from .comic import Comic
 from .interface import Category
 
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-
-
 semaphore = asyncio.Semaphore(30)
 
 
