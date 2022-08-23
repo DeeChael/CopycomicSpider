@@ -33,7 +33,7 @@ class Comic:
         async with semaphore:
             async with utils.create_session() as session:
                 async with utils.get(session, 
-                        f"http://api.copymanga.com/api/v3/comic/{self.id}/group/default/chapters?limit=500&offset=0&platform=3") as response:
+                        f"http://api.copymanga.site/api/v3/comic/{self.id}/group/default/chapters?limit=500&offset=0&platform=3") as response:
                     if response.status != 200:
                         raise RuntimeError(f"Network problem {{code: {response.status}}}")
                     response = json.loads(await response.text())
@@ -47,7 +47,7 @@ class Comic:
                     times = (total // 500) - 1 if total % 500 == 0 else (total // 500)
                     for offset in range(0, times):
                         async with utils.get(session, 
-                                f"http://api.copymanga.com/api/v3/comic/{self.id}/group/default/chapters?limit=500&offset={(offset + 1) * 500}&platform=3") as extra_response:
+                                f"http://api.copymanga.site/api/v3/comic/{self.id}/group/default/chapters?limit=500&offset={(offset + 1) * 500}&platform=3") as extra_response:
                             if extra_response.status != 200:
                                 raise RuntimeError(f"Network problem {{code: {extra_response.status}}}")
                         extra_response = json.loads(await extra_response.text())

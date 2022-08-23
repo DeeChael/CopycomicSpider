@@ -61,7 +61,7 @@ class LeaderboardResult(Result):
         comics = list()
         async with semaphore:
             async with utils.create_session() as session:
-                async with utils.get(session, "http://copymanga.org/rank") as response:
+                async with utils.get(session, "http://copymanga.site/rank") as response:
                     if response.status != 200:
                         raise RuntimeError(f"Network problem {{code: {response.status}}}")
                     html = etree.HTML(await response.text())
@@ -94,7 +94,7 @@ class CategoryResult(Result):
         async with semaphore:
             async with utils.create_session() as session:
                 async with utils.get(session, 
-                        f"http://copymanga.org/comics?theme={self.category.value}&offset={50 * (page - 1)}&limit=50") as response:
+                        f"http://copymanga.site/comics?theme={self.category.value}&offset={50 * (page - 1)}&limit=50") as response:
                     if response.status != 200:
                         raise RuntimeError(f"Network problem {{code: {response.status}}}")
                     html = etree.HTML(await response.text())
@@ -148,7 +148,7 @@ async def fetch_category(category: Category) -> CategoryResult:
     async with semaphore:
         async with utils.create_session() as session:
             async with utils.get(session, 
-                    f"http://copymanga.org/comics?theme={category.value}") as response:
+                    f"http://copymanga.site/comics?theme={category.value}") as response:
                 if response.status != 200:
                     raise RuntimeError(f"Network problem {{code: {response.status}}}")
                 html = etree.HTML(await response.text())
@@ -163,7 +163,7 @@ async def search(keyword: str):
     async with semaphore:
         async with utils.create_session() as session:
             async with utils.get(session, 
-                    f"https://api.copymanga.com/api/v3/search/comic?format=json&limit=20&offset=0&platform=3&q={keyword}") as response:
+                    f"https://api.copymanga.site/api/v3/search/comic?format=json&limit=20&offset=0&platform=3&q={keyword}") as response:
                 if response.status != 200:
                     raise RuntimeError(f"Network problem {{code: {response.status}}}")
                 response = json.loads(await response.text())
@@ -180,7 +180,7 @@ async def fetch_comic(id: str) -> Comic:
     logging.debug(f"Trying to fetch comic by id {id}")
     async with semaphore:
         async with utils.create_session() as session:
-            async with utils.get(session, "http://copymanga.org/comic/" + id) as response:
+            async with utils.get(session, "http://copymanga.site/comic/" + id) as response:
                 if response.status != 200:
                     raise RuntimeError(f"Network problem {{code: {response.status}}}")
                 html = etree.HTML(await response.text())

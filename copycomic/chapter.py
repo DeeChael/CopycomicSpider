@@ -37,7 +37,7 @@ class Chapter:
         logging.debug(f"Trying to download: {self.comic_name} - {self.name}")
         async with semaphore:
             async with utils.create_session() as session:
-                async with utils.get(session, f"http://api.copymanga.com/api/v3/comic/{self.comic_id}/chapter2/{self.id}?platform=3") as response:
+                async with utils.get(session, f"http://api.copymanga.site/api/v3/comic/{self.comic_id}/chapter2/{self.id}?platform=3") as response:
                     if response.status != 200:
                         raise RuntimeError(f"Network problem {{code: {response.status}}}")
                     response = json.loads(await response.text())
